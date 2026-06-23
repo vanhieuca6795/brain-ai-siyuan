@@ -14,7 +14,6 @@ export default defineConfig({
 
     plugins: [
         svelte(),
-
         viteStaticCopy({
             targets: [
                 { src: "./README.md", dest: "./" },
@@ -46,6 +45,13 @@ export default defineConfig({
                     }
                     return assetInfo.name;
                 },
+                // Ensure our default export is used
+                exports: "default",
+                footer: `
+// Re-export the plugin class (siyuan expects default export)
+if (typeof __siyuan_plugin__ !== 'undefined') {
+    module.exports = __siyuan_plugin__;
+}`,
             },
         },
     },

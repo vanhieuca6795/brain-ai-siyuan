@@ -1,5 +1,4 @@
 import { settings } from "../lib/store";
-import OpenAI from "openai";
 
 let deepseekKey = "";
 let deepseekModel = "deepseek-chat";
@@ -8,24 +7,31 @@ settings.subscribe((s) => {
     deepseekModel = s.deepseekModel;
 });
 
-function getClient() {
+async function callDeepSeek(messages: { role: string; content: string }[]): Promise<string> {
     if (!deepseekKey) throw new Error("DeepSeek API key not set");
-    return new OpenAI({
-        apiKey: deepseekKey,
-        baseURL: "https://api.deepseek.com/v1",
-        dangerouslyAllowBrowser: true,
+    const r = await fetch("https://api.deepseek.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${deepseekKey}`,
+        },
+        body: JSON.stringify({
+            model: deepseekModel,
+            messages,
+            temperature: 0.3,
+            max_tokens: 2000,
+        }),
     });
+    if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        throw new Error((err as any).error?.message || `HTTP ${r.status}`);
+    }
+    const data = await r.json();
+    return data.choices?.[0]?.message?.content || "";
 }
 
 export async function chat(messages: { role: string; content: string }[]): Promise<string> {
-    const client = getClient();
-    const r = await client.chat.completions.create({
-        model: deepseekModel,
-        messages: messages as any,
-        temperature: 0.3,
-        max_tokens: 2000,
-    });
-    return r.choices[0]?.message?.content || "";
+    return callDeepSeek(messages);
 }
 
 export async function chatWithContext(
@@ -51,5 +57,5 @@ Be concise. Answer in the same language as the user.`,
         },
     ];
 
-    return chat(messages);
+    return callDeepSeek(messages);
 }
