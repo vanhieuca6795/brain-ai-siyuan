@@ -1,0 +1,24 @@
+{
+  "name": "brain-ai-siyuan",
+  "author": "vanhi",
+  "url": "https://github.com/vanhi/brain-ai-siyuan",
+  "version": "0.1.0",
+  "minAppVersion": "3.6.0",
+  "displayName": {
+    "en_US": "Brain AI",
+    "zh_CN": "Brain AI - 知识大脑"
+  },
+  "description": {
+    "en_US": "AI-powered second brain: RAG semantic search, auto-embedding, knowledge graph, and chat with your notes using DeepSeek/GPT.",
+    "zh_CN": "AI驱动的第二大脑：RAG语义搜索、自动嵌入、知识图谱、基于笔记的AI对话"
+  },
+  "readme": {
+    "en_US": "README.md",
+    "zh_CN": "README_zh_CN.md"
+  },
+  "i18n": ["en_US"],
+  "funding": {
+    "custom": []
+  },
+  "keywords": ["ai", "rag", "chat", "embedding", "knowledge-graph", "deepseek", "semantic-search", "second-brain"]
+}

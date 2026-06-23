@@ -1,0 +1,14 @@
+#brain-ai-root {
+  font-family: var(--b3-font-family);
+  color: var(--b3-theme-on-background);
+}
+#brain-ai-root * {
+  box-sizing: border-box;
+}
+#brain-ai-root ::-webkit-scrollbar {
+  width: 6px;
+}
+#brain-ai-root ::-webkit-scrollbar-thumb {
+  background: var(--b3-theme-surface-lighter);
+  border-radius: 3px;
+}
